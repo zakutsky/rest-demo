@@ -33,14 +33,18 @@ pipeline {
 
         stage('Build docker') {
             steps {
-                dockerImage = docker.build imageName
+                script {
+                    dockerImage = docker.build imageName
+                }
             }
         }
 
         stage('Upload image to Nexus') {
             steps {
-                docker.withRegistry(registry, "nexus_repo") {
-                    docker.push('latest')
+                script {
+                    docker.withRegistry(registry, "nexus_repo") {
+                        docker.push('latest')
+                    }
                 }
             }
         }
