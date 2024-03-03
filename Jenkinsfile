@@ -25,11 +25,11 @@ pipeline {
             }
         }
 
-        stage('Deploy jar') {
-            steps {
-                bat "mvn jar:jar deploy:deploy"
-            }
-        }
+//         stage('Deploy jar') {
+//             steps {
+//                 bat "mvn jar:jar deploy:deploy"
+//             }
+//         }
 
         stage('Build docker') {
             steps {
@@ -42,7 +42,7 @@ pipeline {
         stage('Upload image to Nexus') {
             steps {
                 script {
-                    docker.withRegistry(registry, "nexus_repo") {
+                    docker.withRegistry(registry, 'nexus_repo') {
                         docker.push('latest')
                     }
                 }
