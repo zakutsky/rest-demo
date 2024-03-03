@@ -1,9 +1,9 @@
-FROM bellsoft/liberica-runtime-container:jdk-all-11-cds-slim-musl as builder
+FROM adoptopenjdk/maven-openjdk11 as builder
 WORKDIR /opt/app
 COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+COPY pom.xml ./
 COPY ./src ./src
-RUN ./mvnw clean install
+RUN mvn clean install
 
 FROM bellsoft/liberica-runtime-container:jdk-all-11-cds-slim-musl
 WORKDIR /opt/app
