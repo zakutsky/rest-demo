@@ -34,7 +34,7 @@ pipeline {
         stage('Login docker') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus_repo', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASS')]) {
-                    bat "docker login -p $NEXUS_PASS -u $NEXUS_USERNAME registry"
+                    bat "docker login -p $NEXUS_PASS -u $NEXUS_USERNAME $registry"
                 }
             }
         }
