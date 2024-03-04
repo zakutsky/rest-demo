@@ -1,8 +1,6 @@
 FROM adoptopenjdk/maven-openjdk11 as builder
 WORKDIR /opt/app
-COPY .mvn/ .mvn
-COPY pom.xml ./
-COPY ./src ./src
+COPY . .
 RUN mvn clean install
 
 FROM bellsoft/liberica-runtime-container:jdk-all-11-cds-slim-musl

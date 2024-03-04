@@ -31,22 +31,30 @@ pipeline {
 //             }
 //         }
 
-        stage('Build docker') {
+        stage('Login docker') {
             steps {
-                script {
-                    dockerImage = docker.build imageName
+                withCredentials([usernamePassword(credentialsId: 'nexus_repo', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASS')]) {
+                    sh "docker login -p $NEXUS_PASS -u $NEXUS_USERNAME registry"
                 }
             }
         }
 
-        stage('Upload image to Nexus') {
-            steps {
-                script {
-                    docker.withRegistry(registry, 'nexus_repo') {
-                        docker.push('latest')
-                    }
-                }
-            }
-        }
+//         stage('Build docker') {
+//             steps {
+//                 script {
+//                     dockerImage = docker.build imageName
+//                 }
+//             }
+//         }
+//
+//         stage('Upload image to Nexus') {
+//             steps {
+//                 script {
+//                     docker.withRegistry(registry, 'nexus_repo') {
+//                         docker.push('latest')
+//                     }
+//                 }
+//             }
+//         }
     }
 }
