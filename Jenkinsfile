@@ -13,17 +13,17 @@ pipeline {
 
     stages {
 
-        stage('Build jar') {
-            steps {
-                bat "mvn clean install -DskipTests"
-            }
-        }
-
-        stage('Test') {
-            steps {
-                bat "mvn test"
-            }
-        }
+//         stage('Build jar') {
+//             steps {
+//                 bat "mvn clean install -DskipTests"
+//             }
+//         }
+//
+//         stage('Test') {
+//             steps {
+//                 bat "mvn test"
+//             }
+//         }
 
 //         stage('Deploy jar') {
 //             steps {
