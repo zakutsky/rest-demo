@@ -4,7 +4,7 @@ pipeline {
     environment {
         mavenHome = tool 'jenkins-maven'
         imageName = "rest_demo"
-        registry = "0.0.0.0:8082/repository/docker-release/"
+        registry = "http://0.0.0.0:8082/repository/docker-release/"
         dockerImage = ''
     }
     tools {
