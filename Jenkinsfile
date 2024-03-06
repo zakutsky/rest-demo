@@ -56,6 +56,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'openshift-token', variable: 'TOKEN')]) {
                     sh "oc login --token=$TOKEN --server=${openshiftAddress}"
                 }
+                sh "echo success login"
                 sh "sed -i 's/BRANCHNAME/${imageName}/g' openshift/deployment.yaml"
                 sh "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/deployment.yml"
                 sh "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/service.yml"
