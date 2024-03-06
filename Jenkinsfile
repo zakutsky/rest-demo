@@ -54,17 +54,17 @@ pipeline {
         stage('Deploy OPENSHIFT') {
             steps {
                 withCredentials([string(credentialsId: 'openshift-token', variable: 'TOKEN')]) {
-                    bat "oc login --token=$TOKEN --server=${openshiftAddress}"
+                    sh "oc login --token=$TOKEN --server=${openshiftAddress}"
                 }
-                bat "sed -i 's/BRANCHNAME/${imageName}/g' openshift/deployment.yaml"
-                bat "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/deployment.yml"
-                bat "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/service.yml"
-                bat "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/route.yml"
+                sh "sed -i 's/BRANCHNAME/${imageName}/g' openshift/deployment.yaml"
+                sh "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/deployment.yml"
+                sh "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/service.yml"
+                sh "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/route.yml"
 
-                bat "oc project ${openshiftProjectName}"
-                bat "oc apply -f openshift/deployment.yaml"
-                bat "oc apply -f openshift/service.yaml"
-                bat "oc apply -f openshift/route.yaml"
+                sh "oc project ${openshiftProjectName}"
+                sh "oc apply -f openshift/deployment.yaml"
+                sh "oc apply -f openshift/service.yaml"
+                sh "oc apply -f openshift/route.yaml"
             }
         }
     }
