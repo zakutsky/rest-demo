@@ -6,6 +6,8 @@ pipeline {
         imageName = "rest_demo"
         registry = "http://0.0.0.0:8082/repository/docker-release/"
         dockerImage = ''
+        openshiftAddress = 'https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443'
+        openshiftProjectName = 'makzak65-dev'
     }
     tools {
         jdk 'java-21'
@@ -13,31 +15,23 @@ pipeline {
 
     stages {
 
-//         stage('Build jar') {
-//             steps {
-//                 bat "mvn clean install -DskipTests"
-//             }
-//         }
-//
-//         stage('Test') {
-//             steps {
-//                 bat "mvn test"
-//             }
-//         }
+        stage('Build jar') {
+            steps {
+                bat "mvn clean install -DskipTests"
+            }
+        }
 
-//         stage('Deploy jar') {
-//             steps {
-//                 bat "mvn jar:jar deploy:deploy"
-//             }
-//         }
+        stage('Test') {
+            steps {
+                bat "mvn test"
+            }
+        }
 
-//         stage('Login docker') {
-//             steps {
-//                 withCredentials([usernamePassword(credentialsId: 'nexus_repo', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASS')]) {
-//                     bat "docker login -p $NEXUS_PASS -u $NEXUS_USERNAME registry"
-//                 }
-//             }
-//         }
+        stage('Deploy jar') {
+            steps {
+                bat "mvn jar:jar deploy:deploy"
+            }
+        }
 
         stage('Build docker') {
             steps {
@@ -47,13 +41,30 @@ pipeline {
             }
         }
 
-        stage('Upload image to Nexus') {
+        stage('Upload docker image to Nexus') {
             steps {
                 script {
                     docker.withRegistry(registry, 'nexus_repo') {
                         dockerImage.push('latest')
                     }
                 }
+            }
+        }
+
+        stage('Deploy OPENSHIFT') {
+            steps {
+                withCredentials([string(credentialsId: 'openshift-token', variable: 'TOKEN')]) {
+                    bat "oc login --token=$TOKEN --server=${openshiftAddress}"
+                }
+                bat "sed -i 's/BRANCHNAME/${imageName}/g' openshift/deployment.yaml"
+                bat "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/deployment.yml"
+                bat "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/service.yml"
+                bat "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/route.yml"
+
+                bat "oc project ${openshiftProjectName}"
+                bat "oc apply -f openshift/deployment.yaml"
+                bat "oc apply -f openshift/service.yaml"
+                bat "oc apply -f openshift/route.yaml"
             }
         }
     }
