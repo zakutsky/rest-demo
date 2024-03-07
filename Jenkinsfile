@@ -33,23 +33,23 @@ pipeline {
 //             }
 //         }
 //
-//         stage('Build docker') {
-//             steps {
-//                 script {
-//                     dockerImage = docker.build imageName
-//                 }
-//             }
-//         }
-//
-//         stage('Upload docker image to Nexus') {
-//             steps {
-//                 script {
-//                     docker.withRegistry(registry, 'nexus_repo') {
-//                         dockerImage.push('latest')
-//                     }
-//                 }
-//             }
-//         }
+        stage('Build docker') {
+            steps {
+                script {
+                    dockerImage = docker.build imageName
+                }
+            }
+        }
+
+        stage('Upload docker image to Nexus') {
+            steps {
+                script {
+                    docker.withRegistry(registry, 'nexus_repo') {
+                        dockerImage.push('rest_demo')
+                    }
+                }
+            }
+        }
 
         stage('Deploy OPENSHIFT') {
             steps {
