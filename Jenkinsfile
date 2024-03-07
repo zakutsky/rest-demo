@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         mavenHome = tool 'jenkins-maven'
-        imageName = "rest_demo"
+        imageName = "rest-demo"
         registry = "http://0.0.0.0:8082/repository/docker-release/"
         dockerImage = ''
         openshiftAddress = 'https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443'
