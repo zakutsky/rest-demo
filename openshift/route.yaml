@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Route
 metadata:
-  name: mytag
+  name: rest_demo
   namespace: makzak65-dev
 spec:
-  host: mytag.app.osft
+  host: rest_demo.app.osft
   to:
     kind: Service
-    name: mytag
+    name: rest_demo
     weight: 100
   wildcardPolicy: None

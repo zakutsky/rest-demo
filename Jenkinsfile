@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry(registry, 'nexus_repo') {
-                        dockerImage.push('rest_demo')
+                        dockerImage.push('latest')
                     }
                 }
             }

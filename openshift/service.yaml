@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mytag
+  name: rest_demo
   namespace: makzak65-dev
 spec:
   selector:
-    app: mytag
+    app: rest_demo
   ports:
     - protocol: TCP
       port: 8070
