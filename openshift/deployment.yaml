@@ -19,7 +19,7 @@ spec:
             - name: PROFILE
               value: dev
           image: >-
-            http://0.0.0.0:8082/repository/docker-release/rest_demo:BRANCHNAME
+            http://0.0.0.0:8082/repository/docker-release/rest_demo:mytag
           readinessProbe:
             httpGet:
               path: /health
@@ -55,5 +55,5 @@ triggers:
         - gds
       from:
         kind: ImageStreamTag
-        name: 'rest_demo:BRANCHNAME'
+        name: 'rest_demo:mytag'
     type: ImageChange
