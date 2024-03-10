@@ -42,11 +42,11 @@ spec:
             - mountPath: /etc/my-app.conf
               name: my-app-config-prop
               subPath: application.properties
-        volumes:
-          - configMap:
+      volumes:
+        - configMap:
 #              defaultMode: 420
-              name: my-app-config
-            name: my-app-config-prop
+            name: my-app-config
+          name: my-app-config-prop
 triggers:
   - imageChangeParams:
       automatic: true
