@@ -63,9 +63,10 @@ pipeline {
 //                 sh "sed -i 's/DEPLOYNAME/${imageName}/g' deploy/route.yml"
 
                 bat "oc project ${openshiftProjectName}"
-                bat "oc apply -f openshift/deployment.yaml"
-                bat "oc apply -f openshift/service.yaml"
-                bat "oc apply -f openshift/route.yaml"
+//                 bat "oc apply -f openshift/deployment.yaml"
+//                 bat "oc apply -f openshift/service.yaml"
+//                 bat "oc apply -f openshift/route.yaml"
+                bat "oc apply -f openshift/depapp.yaml"
             }
         }
     }

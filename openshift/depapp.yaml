@@ -1,0 +1,62 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: rest-demo
+  labels:
+    app: rest-demo-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rest-demo
+    spec:
+      containers:
+        - name: rest-demo
+          image: http://0.0.0.0:8082/repository/docker-release/rest-demo:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /etc/my-app.conf
+              name: application-properties
+      volumes:
+        - name: application-properties
+          configMap:
+            name: application-properties
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-demo-service
+  labels:
+    app: rest-demo-app
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: rest-demo
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: rest-demo
+  labels:
+    app: rest-demo-app
+spec:
+  host: rest.apps-crc.testing
+  to:
+    kind: Service
+    name: rest-demo-service
+    weight: 100
+  port:
+    targetPort: http
+  wildcardPolicy: None
