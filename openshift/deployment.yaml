@@ -15,11 +15,11 @@ spec:
         app: rest-demo
     spec:
       containers:
-        - env:
-            - name: PROFILE
-              value: dev
-          image: >-
-            http://0.0.0.0:8082/repository/docker-release/rest-demo:latest
+#        - env:
+#            - name: PROFILE
+#              value: dev
+        - name: rest-demo
+          image: http://0.0.0.0:8082/repository/docker-release/rest-demo:latest
           readinessProbe:
             httpGet:
               path: /health
@@ -31,7 +31,6 @@ spec:
             httpGet:
               path: /
               port: 8080
-          name: my-project
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -39,15 +38,15 @@ spec:
             requests:
               cpu: 0.2
               memory: 1Gi
-#          volumeMounts:
-#            - mountPath: /etc/my-app.conf
-#              name: my-app-config-prop
-#              subPath: application.properties
-#        volumes:
-#          - configMap:
+          volumeMounts:
+            - mountPath: /etc/my-app.conf
+              name: my-app-config-prop
+              subPath: application.properties
+        volumes:
+          - configMap:
 #              defaultMode: 420
-#              name: my-app-config
-#            name: my-app-config-prop
+              name: my-app-config
+            name: my-app-config-prop
 triggers:
   - imageChangeParams:
       automatic: true

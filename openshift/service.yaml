@@ -8,4 +8,4 @@ spec:
     app: rest-demo
   ports:
     - protocol: TCP
-      port: 8070
+      port: 8080
