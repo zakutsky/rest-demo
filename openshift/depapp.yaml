@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: rest-demo
-          image: http://0.0.0.0:8082/repository/docker-release/rest-demo:latest
+          image: maiklzak/restdemo:latest
           ports:
             - containerPort: 8080
           volumeMounts:
