@@ -52,7 +52,7 @@ metadata:
   labels:
     app: rest-demo-app
 spec:
-  host: rest.apps-crc.testing
+  host: rest.appsabc.testing
   to:
     kind: Service
     name: rest-demo-service

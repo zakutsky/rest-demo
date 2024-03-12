@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class ClientController {
 
@@ -17,6 +18,11 @@ public class ClientController {
     @Autowired
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<String> hello() {
+        return new ResponseEntity<>("hello", HttpStatus.OK);
     }
 
     @PostMapping("/clients")
